@@ -39,6 +39,9 @@ export const getReceiptApi = async (transactionId: string): Promise<Blob> => {
 export const toggleSecurityLockApi = (enabled: boolean, password?: string) =>
   api.post('/api/wallet/security-lock', { enabled, password });
 
+export const freezeAccountApi = (reason?: string) =>
+  api.post('/api/wallet/freeze-account', { reason });
+
 export const getSessionsApi = async (): Promise<{ sessions: SessionItem[] }> => {
   const { data } = await api.get<{ sessions: SessionItem[] }>('/api/wallet/sessions');
   return data;

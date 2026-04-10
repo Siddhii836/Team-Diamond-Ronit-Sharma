@@ -14,7 +14,10 @@ export const RiskHeatmapChart = ({ data }: { data: RiskBucket[] }) => {
           <BarChart data={data}>
             <XAxis dataKey="bucket" stroke="#94a3b8" />
             <YAxis stroke="#94a3b8" />
-            <Tooltip />
+            <Tooltip
+              contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '0.5rem' }}
+              labelStyle={{ color: '#f8fafc' }}
+            />
             <Bar dataKey="count" fill="#EF4444" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>

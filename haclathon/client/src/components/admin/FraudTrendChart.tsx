@@ -14,7 +14,10 @@ export const FraudTrendChart = ({ data }: { data: TrendPoint[] }) => {
           <LineChart data={data}>
             <XAxis dataKey="day" stroke="#94a3b8" />
             <YAxis stroke="#94a3b8" />
-            <Tooltip />
+            <Tooltip
+              contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '0.5rem' }}
+              labelStyle={{ color: '#f8fafc' }}
+            />
             <Line type="monotone" dataKey="reports" stroke="#6366F1" strokeWidth={3} dot={false} />
           </LineChart>
         </ResponsiveContainer>

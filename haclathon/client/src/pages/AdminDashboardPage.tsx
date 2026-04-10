@@ -120,18 +120,18 @@ export const AdminDashboardPage = () => {
       ) : (
         <div>
           <h2 className="text-lg font-semibold text-white">Priority Dispute Cases</h2>
-<DisputeCasesTable disputes={sortedDisputes} onSolve={setSelectedDispute} />
-    </div>
-  )}
+          <DisputeCasesTable disputes={sortedDisputes} onSolve={setSelectedDispute} />
+        </div>
+      )}
 
-  {reports.length === 0 ? <EmptyState title="No AI fraud reports" subtitle="AI-generated fraud cases will appear here once detected." /> : null}
+      {reports.length === 0 ? <EmptyState title="No AI fraud reports" subtitle="AI-generated fraud cases will appear here once detected." /> : null}
 
-  <DisputeResolutionModal
-    open={Boolean(selectedDispute)}
-    dispute={selectedDispute}
-    onClose={() => setSelectedDispute(null)}
-    onResolved={fetchData}
-  />
+      <DisputeResolutionModal
+        open={Boolean(selectedDispute)}
+        dispute={selectedDispute}
+        onClose={() => setSelectedDispute(null)}
+        onResolved={fetchData}
+      />
 
       {reports.length > 0 ? <FraudReportsTable reports={reports} onSelect={setSelected} /> : null}
 

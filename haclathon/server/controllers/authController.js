@@ -35,7 +35,8 @@ const signup = async (req, res) => {
       transaction_pin_hash,
       wallet_balance_encrypted,
       kyc_verified: false,
-      role: 'user'
+      role: 'user',
+      risk_score: 42
     });
 
     return res.status(201).json({
@@ -44,7 +45,8 @@ const signup = async (req, res) => {
         id: user._id,
         name: normalizedName,
         email: normalizedEmail,
-        wallet_balance: '₹10000'
+        wallet_balance: '₹10000',
+        risk_score: 42
       }
     });
   } catch (error) {
@@ -106,7 +108,9 @@ const login = async (req, res) => {
         email: decrypt(user.email_encrypted),
         role: user.role,
         account_frozen: user.account_frozen,
-        security_lock_enabled: user.security_lock_enabled
+        freeze_reason: user.freeze_reason,
+        security_lock_enabled: user.security_lock_enabled,
+        risk_score: user.risk_score || 42
       }
     });
   } catch (error) {

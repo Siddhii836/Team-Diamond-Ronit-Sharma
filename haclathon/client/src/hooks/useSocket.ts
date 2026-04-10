@@ -7,7 +7,7 @@ import { AuthTokenPayload } from '../types/user';
 let socket: Socket | null = null;
 
 export const useSocket = () => {
-  const { token, user } = useAuth();
+  const { token, user, updateUser } = useAuth();
 
   useEffect(() => {
     if (!token || !user) {
@@ -64,6 +64,14 @@ export const useSocket = () => {
     });
 
     socketInstance.on('account_frozen', (payload: { userId: string; reason: string; riskScore: number }) => {
+      if (user?.id === payload.userId) {
+        updateUser?.({
+          ...user,
+          account_frozen: true,
+          freeze_reason: payload.reason
+        });
+      }
+
       window.dispatchEvent(
         new CustomEvent('app-toast', {
           detail: {
@@ -82,5 +90,5 @@ export const useSocket = () => {
       socketInstance.disconnect();
       socket = null;
     };
-  }, [token, user]);
+  }, [token, user, updateUser]);
 };

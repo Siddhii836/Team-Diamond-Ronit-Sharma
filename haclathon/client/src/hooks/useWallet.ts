@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
   deleteSessionApi,
+  freezeAccountApi,
   getBalanceApi,
   getSessionsApi,
   getTransactionsApi,
@@ -79,6 +80,18 @@ export const useWallet = () => {
     );
   };
 
+  const freezeAccount = async (reason?: string) => {
+    await freezeAccountApi(reason);
+    window.dispatchEvent(
+      new CustomEvent('app-toast', {
+        detail: {
+          type: 'warning',
+          message: 'Account frozen. Contact admin to unfreeze.'
+        }
+      })
+    );
+  };
+
   const downloadReceipt = async (transactionId: string) => {
     try {
       const token = localStorage.getItem('wallet_token');
@@ -130,6 +143,7 @@ export const useWallet = () => {
     verifyPin,
     sendMoney,
     toggleSecurityLock,
+    freezeAccount,
     downloadReceipt,
     removeSession
   };

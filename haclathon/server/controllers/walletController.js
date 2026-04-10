@@ -64,6 +64,27 @@ const verifyPin = async (req, res) => {
   }
 };
 
+const freezeAccountSelf = async (req, res) => {
+  try {
+    const { reason } = req.validatedBody;
+    const user = await User.findById(req.user.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    user.account_frozen = true;
+    user.freeze_reason = reason || 'User requested freeze. Please complete necessary actions before unfreezing.';
+    await user.save();
+
+    await logEvent(user._id, 'ACCOUNT_FREEZE', { fingerprint: `self-freeze-${Date.now()}`, reason: user.freeze_reason });
+
+    return res.status(200).json({ message: 'Account frozen successfully.', freezeReason: user.freeze_reason });
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to freeze account.', error: error.message });
+  }
+};
+
 const sendMoney = async (req, res) => {
   try {
     const { receiverEmail, amount, note, pinToken } = req.validatedBody;
@@ -330,6 +351,7 @@ module.exports = {
   getTransactions,
   verifyPin,
   toggleSecurityLock,
+  freezeAccountSelf,
   getSessions,
   removeSession,
   downloadReceipt

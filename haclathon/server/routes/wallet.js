@@ -9,6 +9,7 @@ const {
   getTransactions,
   verifyPin,
   toggleSecurityLock,
+  freezeAccountSelf,
   getSessions,
   removeSession,
   downloadReceipt
@@ -32,11 +33,16 @@ const securityLockSchema = z.object({
   password: z.string().min(8).optional()
 });
 
+const freezeAccountSchema = z.object({
+  reason: z.string().max(200).optional()
+});
+
 router.get('/balance', requireAuth, getBalance);
 router.post('/verify-pin', requireAuth, validateRequest(verifyPinSchema), verifyPin);
 router.post('/send', requireAuth, validateRequest(sendMoneySchema), sendMoney);
 router.get('/transactions', requireAuth, getTransactions);
 router.post('/security-lock', requireAuth, validateRequest(securityLockSchema), toggleSecurityLock);
+router.post('/freeze-account', requireAuth, validateRequest(freezeAccountSchema), freezeAccountSelf);
 router.get('/sessions', requireAuth, getSessions);
 router.delete('/sessions/:id', requireAuth, removeSession);
 router.get('/receipt/:transactionId', requireAuth, downloadReceipt);

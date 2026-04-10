@@ -7,6 +7,7 @@ export interface User {
   decrypted_email?: string;
   role: 'user' | 'admin';
   account_frozen: boolean;
+  freeze_reason?: string;
   security_lock_enabled: boolean;
   risk_score: number;
   kyc_verified?: boolean;

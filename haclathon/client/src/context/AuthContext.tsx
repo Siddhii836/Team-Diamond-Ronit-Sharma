@@ -11,6 +11,7 @@ interface AuthContextValue {
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: (sessionId?: string) => Promise<void>;
+  updateUser: (user: User | null) => void;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -32,9 +33,8 @@ const hydrateUser = (): { token: string | null; user: User | null; sessionId: st
       role: decoded.role,
       name: parsed?.name || decoded.name || 'Wallet User',
       email: parsed?.email || '',
-      account_frozen: parsed?.account_frozen || false,
-      security_lock_enabled: parsed?.security_lock_enabled || false,
-      risk_score: parsed?.risk_score || 0,
+      account_frozen: parsed?.account_frozen || false,      freeze_reason: parsed?.freeze_reason,      security_lock_enabled: parsed?.security_lock_enabled || false,
+      risk_score: parsed?.risk_score || 42,
       kyc_verified: parsed?.kyc_verified
     };
 
@@ -72,6 +72,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const updateUser = (newUser: User | null) => {
+    if (!newUser) {
+      localStorage.removeItem('wallet_user');
+      setUser(null);
+      return;
+    }
+
+    setUser(newUser);
+    localStorage.setItem('wallet_user', JSON.stringify(newUser));
+  };
+
   const logout = async (id?: string) => {
     try {
       await logoutApi(id ? { sessionId: id } : undefined);
@@ -94,7 +105,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       isAuthenticated: Boolean(token),
       loading,
       login,
-      logout
+      logout,
+      updateUser
     }),
     [token, user, sessionId, loading]
   );
