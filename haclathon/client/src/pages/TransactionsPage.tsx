@@ -13,6 +13,7 @@ type FilterType = 'all' | 'sent' | 'received' | 'flagged';
 
 export const TransactionsPage = () => {
   const wallet = useWallet();
+  const { fetchTransactions } = wallet;
   const fraud = useFraud();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -21,8 +22,8 @@ export const TransactionsPage = () => {
   const limit = 10;
 
   useEffect(() => {
-    void wallet.fetchTransactions(page, limit);
-  }, [page]);
+    void fetchTransactions(page, limit);
+  }, [fetchTransactions, page, limit]);
 
   const filtered = useMemo(() => {
     const list = wallet.transactions;
@@ -57,7 +58,7 @@ export const TransactionsPage = () => {
           transactions={filtered}
           onReport={async (tx: Transaction) => {
             let matchedReport = fraud.reports.find(
-              (report) => report.transaction_id?._id === tx.id || report.transaction_id === tx.id
+              (report) => report.transaction_id?._id === tx.id
             );
 
             if (!matchedReport) {

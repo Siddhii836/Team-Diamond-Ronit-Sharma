@@ -11,6 +11,11 @@ dotenv.config();
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/securepay';
 
 const seed = async () => {
+  if (process.env.CONFIRM_DB_RESET !== 'YES') {
+    console.error('Seed aborted. Set CONFIRM_DB_RESET=YES to allow destructive DB reset.');
+    process.exit(1);
+  }
+
   try {
     await mongoose.connect(MONGODB_URI);
     console.log('Connected to MongoDB for seeding...');

@@ -18,6 +18,24 @@ A secure digital wallet application built in three phases with a MongoDB-backed 
 
 **Layer 7: Security Hardening.** The server uses Helmet, a strict CORS origin allowlist, and rate limiting at the global and login route levels. The frontend mirrors that hardening with protected routes, room-scoped socket joins, and authenticated receipt downloads.
 
+## Automated 7-Layer Security Script
+
+Use the repository-level shell script to run a defense-in-depth security audit across host baseline, secret hygiene, auth controls, API hardening, crypto policy, dependency risk, and auditability.
+
+```bash
+cd ..
+chmod +x seven-layer-security.sh
+./seven-layer-security.sh
+```
+
+Optional remediation mode applies safe hardening steps (such as tightening `server/.env` file permissions):
+
+```bash
+./seven-layer-security.sh --apply
+```
+
+Reports are generated under `haclathon/security-reports/`.
+
 ## Setup
 
 1. Clone the repository.

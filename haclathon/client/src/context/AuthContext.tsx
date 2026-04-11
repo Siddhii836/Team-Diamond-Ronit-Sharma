@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { AuthTokenPayload, User } from '../types/user';

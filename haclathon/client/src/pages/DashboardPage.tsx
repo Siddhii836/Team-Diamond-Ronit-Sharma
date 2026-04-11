@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { WalletBalanceCard } from '../components/wallet/WalletBalanceCard';
 import { QuickActions } from '../components/wallet/QuickActions';
 import { RecentTransactions } from '../components/wallet/RecentTransactions';
@@ -60,12 +60,6 @@ export const DashboardPage = () => {
     setShowSend(true);
   };
 
-  useEffect(() => {
-    if (user?.account_frozen) {
-      setShowSend(false);
-    }
-  }, [user?.account_frozen]);
-
   return (
     <div className="space-y-6">
       <div className="space-y-4">
@@ -118,7 +112,7 @@ export const DashboardPage = () => {
       </div>
 
       <SendMoneyModal
-        open={showSend}
+        open={showSend && !user?.account_frozen}
         onClose={() => setShowSend(false)}
         riskScore={user?.risk_score || 42}
         loading={wallet.loading}

@@ -7,6 +7,7 @@ const { verifyAuthToken } = require('./utils/jwtHelper');
 
 const env = require('./config/env');
 const connectDB = require('./config/db');
+const { globalLimiter } = require('./middleware/rateLimiter');
 
 const authRoutes = require('./routes/auth');
 const walletRoutes = require('./routes/wallet');
@@ -30,6 +31,7 @@ app.set('io', io);
 app.use(express.json({ limit: '1mb' }));
 app.use(helmet()); // LAYER 7
 app.use(cors({ origin: allowedOrigins, credentials: true })); // LAYER 7
+app.use(globalLimiter);
 // LAYER 7: Hardening headers and CORS applied globally
 
 app.get('/', (req, res) => {

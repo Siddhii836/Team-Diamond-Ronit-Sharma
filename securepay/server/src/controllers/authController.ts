@@ -4,12 +4,12 @@ import bcrypt from 'bcryptjs';
 import { User } from '../models/User.ts';
 import { Wallet } from '../models/Wallet.ts';
 import { logAudit } from '../services/auditService.ts';
+import { env } from '../config/env.ts';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 const JWT_EXPIRE = '24h';
 
 const generateToken = (id: string) => {
-  return jwt.sign({ id }, JWT_SECRET, { expiresIn: JWT_EXPIRE });
+  return jwt.sign({ id }, env.jwtSecret, { expiresIn: JWT_EXPIRE });
 };
 
 export const register = async (req: Request, res: Response) => {

@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { User } from '../models/User.ts';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
+import { env } from '../config/env.ts';
 
 export interface AuthRequest extends Request {
   user?: any;
@@ -20,7 +19,7 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
   }
 
   try {
-    const decoded: any = jwt.verify(token, JWT_SECRET);
+    const decoded: any = jwt.verify(token, env.jwtSecret);
     req.user = await User.findById(decoded.id);
     
     if (!req.user) {

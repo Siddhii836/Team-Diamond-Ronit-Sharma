@@ -8,13 +8,14 @@ import { formatDate } from '../utils/formatDate';
 
 export const SessionsPage = () => {
   const wallet = useWallet();
+  const { fetchSessions } = wallet;
   const { sessionId: currentSessionId, logout } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    void wallet.fetchSessions();
-  }, []);
+    void fetchSessions();
+  }, [fetchSessions]);
 
   const logoutAll = async () => {
     setLoading(true);

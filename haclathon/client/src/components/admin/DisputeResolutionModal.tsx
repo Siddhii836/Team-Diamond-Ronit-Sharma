@@ -42,7 +42,7 @@ export const DisputeResolutionModal = ({ open, dispute, onClose, onResolved }: P
       window.dispatchEvent(new CustomEvent('app-toast', { detail: { type: 'success', message: 'Dispute marked as resolved.' } }));
       await onResolved();
       handleClose();
-    } catch (err) {
+    } catch {
       setError('Failed to resolve dispute. Please try again.');
     } finally {
       setSubmitting(false);

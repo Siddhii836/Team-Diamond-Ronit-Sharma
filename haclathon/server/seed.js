@@ -28,6 +28,11 @@ const seedAuditLog = async (userId, eventType, metadata, time) => {
 };
 
 const run = async () => {
+  if (process.env.CONFIRM_DB_RESET !== 'YES') {
+    console.error('Seed aborted. Set CONFIRM_DB_RESET=YES to allow destructive DB reset.');
+    process.exit(1);
+  }
+
   await connectDB();
 
   await Promise.all([

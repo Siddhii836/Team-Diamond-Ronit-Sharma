@@ -3,6 +3,7 @@ const express = require('express');
 const { z } = require('zod');
 const validateRequest = require('../middleware/validateRequest');
 const { requireAuth } = require('../middleware/authMiddleware');
+const { loginLimiter } = require('../middleware/rateLimiter');
 const { signup, login, kyc, logout } = require('../controllers/authController');
 
 const router = express.Router();
@@ -28,7 +29,7 @@ const logoutSchema = z.object({
 });
 
 router.post('/signup', validateRequest(signupSchema), signup);
-router.post('/login', validateRequest(loginSchema), login);
+router.post('/login', loginLimiter, validateRequest(loginSchema), login);
 router.post('/kyc', requireAuth, validateRequest(kycSchema), kyc);
 router.post('/logout', requireAuth, validateRequest(logoutSchema), logout);
 

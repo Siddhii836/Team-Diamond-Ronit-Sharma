@@ -1,9 +1,15 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { EmptyState } from '../components/shared/EmptyState';
 import { StatusBadge } from '../components/shared/StatusBadge';
 import { useFraud } from '../hooks/useFraud';
+import { DisputeCase } from '../types/fraud';
+
+interface PrefillState {
+  transactionId?: string;
+  fraudReportId?: string;
+}
 
 export const DisputePage = () => {
   const { user } = useAuth();
@@ -11,23 +17,11 @@ export const DisputePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const fraud = useFraud();
-  const [transactionId, setTransactionId] = useState('');
-  const [fraudReportId, setFraudReportId] = useState('');
+  const prefilledState = (location.state as PrefillState | null) ?? null;
+  const [transactionId, setTransactionId] = useState(prefilledState?.transactionId ?? '');
+  const [fraudReportId, setFraudReportId] = useState(prefilledState?.fraudReportId ?? '');
   const [message, setMessage] = useState('');
-  const [submittedDispute, setSubmittedDispute] = useState<any>(null);
-  const hasPrefilledRef = useRef(false);
-
-  useEffect(() => {
-    if (!hasPrefilledRef.current) {
-      if (location.state?.transactionId) {
-        setTransactionId(location.state.transactionId as string);
-      }
-      if (location.state?.fraudReportId) {
-        setFraudReportId(location.state.fraudReportId as string);
-      }
-      hasPrefilledRef.current = true;
-    }
-  }, [location.state]);
+  const [submittedDispute, setSubmittedDispute] = useState<DisputeCase | null>(null);
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
