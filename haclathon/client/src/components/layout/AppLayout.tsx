@@ -36,10 +36,10 @@ export const AppLayout = ({ children }: { children: ReactNode }) => {
           }`}
         >
           <div className="mb-6 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-primary">
+            <a href="http://localhost:5713/" className="flex items-center gap-2 text-primary hover:opacity-80 transition-opacity">
               <Wallet className="h-6 w-6" />
-              <span className="text-lg font-semibold">Wallet Secure</span>
-            </div>
+              <span className="text-lg font-semibold">SecurePay</span>
+            </a>
             <button className="md:hidden" onClick={() => setMobileOpen(false)}>
               <X className="h-5 w-5" />
             </button>
@@ -112,7 +112,7 @@ export const AppLayout = ({ children }: { children: ReactNode }) => {
             <button className="md:hidden" onClick={() => setMobileOpen(true)}>
               <Menu className="h-6 w-6" />
             </button>
-            <h1 className="text-lg font-semibold md:text-2xl">Secure Digital Wallet</h1>
+            <h1 className="text-lg font-semibold md:text-2xl">SecurePay Dashboard</h1>
             <button
               className="rounded-lg border border-slate-600 px-3 py-2 text-sm"
               onClick={toggleTheme}

@@ -6,12 +6,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#6366F1',
-        success: '#10B981',
-        danger: '#EF4444',
+        primary: '#2E8B57',
+        success: '#3cb371',
+        danger: '#f28b82',
         warning: '#F59E0B',
-        'app-dark': '#0F172A',
-        'card-dark': '#1E293B'
+        'app-dark': '#202124',
+        'card-dark': '#292a2d'
       }
     }
   },
