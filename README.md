@@ -18,4 +18,4 @@ A secure digital wallet application built in three phases with a MongoDB-backed 
 
 **Layer 7: Security Hardening.** The server uses Helmet, a strict CORS origin allowlist, and rate limiting at the global and login route levels. The frontend mirrors that hardening with protected routes, room-scoped socket joins, and authenticated receipt downloads.
 
-U can see the demo video - https://drive.google.com/file/d/1Bm7b5MGU4JsLKy_u7gX4jt3H_P0n-hab/view?usp=sharing
+You can see the demo video - https://drive.google.com/file/d/1Bm7b5MGU4JsLKy_u7gX4jt3H_P0n-hab/view?usp=sharing
